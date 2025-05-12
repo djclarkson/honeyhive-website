@@ -12,6 +12,7 @@ const distDir = path.resolve(rootDir, 'dist');
 const functionsDir = path.resolve(distDir, 'functions');
 const apiDir = path.resolve(rootDir, 'api');
 const srcApiDir = path.resolve(rootDir, 'src', 'api');
+const publicDir = path.resolve(rootDir, 'public');
 
 // Ensure directories exist
 if (!fs.existsSync(distDir)) {
@@ -32,6 +33,25 @@ if (!fs.existsSync(functionsApiDir)) {
 const functionsAuthDir = path.resolve(functionsApiDir, 'auth');
 if (!fs.existsSync(functionsAuthDir)) {
   fs.mkdirSync(functionsAuthDir, { recursive: true });
+}
+
+// Process the env-config.js file
+console.log('Creating env-config.js with environment variables...');
+const envConfigSrc = path.resolve(publicDir, 'env-config.js');
+const envConfigDest = path.resolve(distDir, 'env-config.js');
+
+if (fs.existsSync(envConfigSrc)) {
+  let envContent = fs.readFileSync(envConfigSrc, 'utf8');
+  
+  // Replace placeholders with actual environment variables
+  envContent = envContent.replace(
+    '__TURNSTILE_SITE_KEY_PLACEHOLDER__', 
+    process.env.CLOUDFLARE_TURNSTILE_SITE_KEY || ''
+  );
+  
+  // Write to the dist directory
+  fs.writeFileSync(envConfigDest, envContent);
+  console.log('Environment config file created successfully.');
 }
 
 // Copy and convert the waitlist API
@@ -154,6 +174,41 @@ export async function onRequest(context) {
 fs.writeFileSync(
   path.resolve(functionsAuthDir, '_middleware.js'),
   authFunctionContent
+);
+
+// Create an environment variables function to expose them to the client
+const envFunctionContent = `
+// Cloudflare Pages Function for environment variables
+export async function onRequest(context) {
+  const { env } = context;
+  
+  // Only expose specific environment variables that should be available to the client
+  const clientEnv = {
+    CLOUDFLARE_TURNSTILE_SITE_KEY: env.CLOUDFLARE_TURNSTILE_SITE_KEY
+  };
+  
+  return new Response(
+    \`window.env = \${JSON.stringify(clientEnv, null, 2)};\`, 
+    { 
+      headers: { 
+        'Content-Type': 'application/javascript',
+        'Cache-Control': 'no-cache, no-store, must-revalidate'
+      } 
+    }
+  );
+}
+`;
+
+// Create the env.js function path
+const envFunctionDir = path.resolve(functionsDir, 'env-js');
+if (!fs.existsSync(envFunctionDir)) {
+  fs.mkdirSync(envFunctionDir, { recursive: true });
+}
+
+// Write the environment function
+fs.writeFileSync(
+  path.resolve(envFunctionDir, '_middleware.js'),
+  envFunctionContent
 );
 
 // Create a _routes.json file in the dist directory for proper SPA routing

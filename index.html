@@ -6,7 +6,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="manifest" href="/manifest.json" /> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Honeyhive - AI-Driven Cyber Security Workflow Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,6 +15,10 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- Load environment variables before the app -->
+    <script src="/env-config.js"></script>
+    <!-- Fallback to Functions API for env vars -->
+    <script src="/functions/env-js"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
