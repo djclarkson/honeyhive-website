@@ -2,10 +2,36 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
-import { useSession } from '../lib/auth-client';
+import { useIsAuthenticated } from '../lib/auth-client';
+import { useState, useEffect } from 'react';
+import { supabase } from '../lib/auth';
 
 const Community: React.FC = () => {
-  const { data: session, isPending } = useSession();
+  const { isAuthenticated, session, isLoading } = useIsAuthenticated();
+  const [userName, setUserName] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Get user profile if authenticated
+    if (session?.user) {
+      // Try to get user data from the database
+      const getUserProfile = async () => {
+        const { data, error } = await supabase
+          .from('users')
+          .select('email')
+          .eq('id', session.user.id)
+          .single();
+        
+        if (!error && data) {
+          setUserName(data.email);
+        } else {
+          // Fallback to auth user email
+          setUserName(session.user.email || null);
+        }
+      };
+      
+      getUserProfile();
+    }
+  }, [session]);
 
   return (
     <div className="min-h-screen bg-white font-sans">
@@ -17,7 +43,7 @@ const Community: React.FC = () => {
       
       <Header 
         onLoginClick={() => {}} 
-        isAuthenticated={true}
+        isAuthenticated={isAuthenticated}
         onLogout={() => {}}
       />
       
@@ -25,8 +51,12 @@ const Community: React.FC = () => {
         <div className="container mx-auto max-w-4xl">
           <div className="mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Community</h1>
-            {session && (
-              <p className="text-sm text-gray-500 mb-4">Welcome, {session.user.name || session.user.email}</p>
+            {isLoading ? (
+              <p className="text-sm text-gray-500 mb-4">Loading...</p>
+            ) : (
+              isAuthenticated && userName && (
+                <p className="text-sm text-gray-500 mb-4">Welcome, {userName}</p>
+              )
             )}
             <p className="text-lg text-gray-600 mb-6">
               Connect with other HoneyHive users, share insights, and get help from our community of security professionals.

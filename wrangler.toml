@@ -2,15 +2,14 @@
 name = "honeyhive-app"
 compatibility_date = "2023-10-30"
 
-# Configure Pages Functions to run on specific routes
-[routes]
-  # Serve static assets from the built client app
-  pattern = "/"
-  script = ""
+# Configure Functions for specific routes
+[[routes]]
+pattern = "/"
+script = ""
 
-  # API routes
-  pattern = "/api/*"
-  script = "dist/functions/api/[wildcard]"
+[[routes]]
+pattern = "/api/*"
+script = "dist/functions/api/[wildcard]"
 
 # Bind environment variables to the application
 [vars]
