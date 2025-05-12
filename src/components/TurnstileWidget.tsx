@@ -8,7 +8,8 @@ interface TurnstileWidgetProps {
 
 const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ onVerify, className = '' }) => {
   // This should be set in your .env files
-  const siteKey = process.env.TURNSTILE_SITE_KEY || process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY;
+  const siteKey = import.meta.env.VITE_CLOUDFLARE_TURNSTILE_SITE_KEY || 
+                  import.meta.env.CLOUDFLARE_TURNSTILE_SITE_KEY;
 
   if (!siteKey) {
     console.error('Cloudflare Turnstile site key is not defined in environment variables');

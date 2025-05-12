@@ -59,7 +59,7 @@ export async function onRequestPost(context) {
     }
 
     // Verify turnstile token
-    const secretKey = env.TURNSTILE_SECRET || env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
+    const secretKey = env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
     if (!secretKey) {
       return new Response(JSON.stringify({ error: 'CAPTCHA configuration error' }), {
         status: 500,
