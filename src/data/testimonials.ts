@@ -1,0 +1,76 @@
+import { TestimonialType } from '../types';
+
+export const testimonials: TestimonialType[] = [
+  {
+    id: 1,
+    name: 'Abbey Byrne',
+    role: 'Director of Customer Success',
+    company: 'Big Interview',
+    content: 'Started with just needing basic security compliance, but ended up with a comprehensive security program. The platform even helped with our SOC2 prep later on. We\'ve cut our security documentation time by 70% and gained confidence in our posture.',
+    avatar: '/avatars/abbey_byrne_interviews.jpg',
+  },
+  {
+    id: 2,
+    name: 'Marc Meinhardt',
+    role: 'VP Partnerships',
+    company: 'EdTech Inc.',
+    content: 'Our enterprise clients have strict security requirements that were overwhelming our team. Honeyhive transformed how we manage third-party security evaluations. What used to take weeks now takes days, and our clients are impressed with our thorough documentation.',
+    avatar: '/avatars/marc_meinhardt_nucleus.jpg',
+  },
+  {
+    id: 3,
+    name: 'David Soo',
+    role: 'CEO',
+    company: 'Education Startup',
+    content: 'Used to panic every time we got a security questionnaire. Now we just send our documentation and usually hear back with an approval. Honeyhive helped us create something that actually works for our company, saving us countless hours of stress.',
+    avatar: '/avatars/david_soo_spoon_creative.jpg',
+  },
+  {
+    id: 4,
+    name: 'Nick Hodges',
+    role: 'Chief Technology Officer',
+    company: 'Tech Solutions',
+    content: 'As someone who manages our tech stack, I appreciated how practical the security solutions were. No oversized enterprise stuff we didn\'t need - just right for our size and budget. It saved us from wasting money on overpowered security tools we\'d never fully utilize.',
+    avatar: '/avatars/nick_hodges_gorilla.jpg',
+  },
+  {
+    id: 5,
+    name: 'Peter Placek',
+    role: 'CEO',
+    company: 'EdTech Labs',
+    content: 'After spinning our wheels for weeks trying to handle security ourselves, Honeyhive guided us through the entire process. Everything was broken down into manageable steps our team could handle alongside our regular work, cutting our compliance anxiety in half.',
+    avatar: '/avatars/petr_placek_shovel.jpg',
+  },
+  {
+    id: 6,
+    name: 'John Craig',
+    role: 'CEO',
+    company: 'Learning Solutions',
+    content: 'The security compliance process was surprisingly straightforward with Honeyhive. It helped us understand exactly what we needed. Now we have security practices that our team actually follows, and third-party security reviews aren\'t a source of stress anymore.',
+    avatar: '/avatars/john_craig_metromind.jpg',
+  },
+  {
+    id: 7,
+    name: 'Clark Gafke',
+    role: 'CEO',
+    company: 'EdTech Innovations',
+    content: 'Been using Honeyhive for over a year now. Started with basic security compliance, now it guides all our security operations as we grow. What used to be a necessary evil has become a competitive advantage. Our customers trust us more because of our security posture.',
+    avatar: '/avatars/clark_gafke_lead.jpg',
+  },
+  {
+    id: 8,
+    name: 'Abdi Zadeh',
+    role: 'Executive Vice President',
+    company: 'Education Systems',
+    content: 'Our developers were impressed with how well the security controls integrated into our workflow. Having a system that understands both security and our industry saved us significant time. The automation features greatly simplified what would have been a complex compliance process.',
+    avatar: '/avatars/abdi_zadeh.jpg',
+  },
+  {
+    id: 9,
+    name: 'Ben Pickrell',
+    role: 'VP of Sales & Customer Success',
+    company: 'Learning Platform',
+    content: 'Sales were stalling because of customer security requirements. Honeyhive helped us create proper documentation and implement the right controls. We can now respond to security questionnaires in hours instead of weeks. No more sales delays due to security concerns.',
+    avatar: '/avatars/ben_pickrell_ari_athletics.jpg',
+  }
+];

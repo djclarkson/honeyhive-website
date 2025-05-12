@@ -1,0 +1,1 @@
+When creating forms, must always implement validation. For example email field cannot be submitted unless valid email.
