@@ -1,77 +1,109 @@
-import { betterAuth } from 'better-auth';
+import { createClient } from '@supabase/supabase-js';
 
-interface User {
+// Define user interface for type consistency
+export interface User {
   email: string;
   id: string;
   role?: string;
   organization?: string;
 }
 
-interface VerificationParams {
-  user: User;
-  url: string;
-  token: string;
-}
+// Initialize Supabase client - these URLs should be loaded from environment variables in production
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-// Server-side auth setup
-export const auth = betterAuth({
-  // Enable email/password authentication
-  emailAndPassword: {
-    enabled: true,
-    requireEmailVerification: true,
-    sendVerificationEmail: async ({ user, url, token }: VerificationParams, request: any) => {
-      // In a real app, you would send the email
-      console.log(`Verification email to ${user.email}: ${url}`);
-    },
-    sendResetPassword: async ({ user, url, token }: VerificationParams, request: any) => {
-      // In a real app, you would send the email using a proper email service
-      console.log(`Reset password email to ${user.email}: ${url}`);
-      
-      // Example of what would happen in a real implementation:
-      // const emailService = new EmailService();
-      // await emailService.sendEmail({
-      //   to: user.email,
-      //   subject: 'Reset Your HoneyHive Password',
-      //   html: `
-      //     <h2>Reset Your Password</h2>
-      //     <p>Hello,</p>
-      //     <p>You requested to reset your password for your HoneyHive account.</p>
-      //     <p>Please click the link below to reset your password:</p>
-      //     <p><a href="${url}" target="_blank">Reset Password</a></p>
-      //     <p>If you didn't request this, you can safely ignore this email.</p>
-      //     <p>This link will expire in 1 hour.</p>
-      //     <p>Thank you,<br>The HoneyHive Team</p>
-      //   `
-      // });
-    }
+// Create Supabase client
+const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+
+// Export for direct use where needed
+export const supabase = supabaseClient;
+
+// Auth handling functions
+export const auth = {
+  // Sign up with email and password
+  signUp: async ({ email, password, organization }: { email: string; password: string; organization?: string }) => {
+    const { data, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          organization
+        }
+      }
+    });
+    
+    if (error) throw error;
+    return data;
   },
-
-  // Configure session settings
-  session: {
-    expiresIn: 60 * 60 * 24 * 7, // 7 days
-    updateAge: 60 * 60 * 24 // 1 day refresh
+  
+  // Sign in with email and password
+  signIn: async ({ email, password }: { email: string; password: string }) => {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+    
+    if (error) throw error;
+    return data;
   },
+  
+  // Sign out
+  signOut: async () => {
+    const { error } = await supabaseClient.auth.signOut();
+    if (error) throw error;
+  },
+  
+  // Reset password
+  resetPassword: async (email: string) => {
+    const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    
+    if (error) throw error;
+  },
+  
+  // Set new password (after reset)
+  updatePassword: async (newPassword: string) => {
+    const { error } = await supabaseClient.auth.updateUser({
+      password: newPassword
+    });
+    
+    if (error) throw error;
+  },
+  
+  // Get current session
+  getSession: async () => {
+    const { data: { session }, error } = await supabaseClient.auth.getSession();
+    if (error) throw error;
+    return session;
+  },
+  
+  // Get current user
+  getUser: async () => {
+    const { data: { user }, error } = await supabaseClient.auth.getUser();
+    if (error) throw error;
+    return user;
+  }
+};
 
-  // Extended user schema
-  user: {
-    additionalFields: {
-      role: {
-        type: 'string',
-        required: false,
-        defaultValue: 'user',
-        input: false, // Cannot be set by users
-      },
-      organization: {
-        type: 'string',
-        required: false,
+// Export a server-side session getter for use in protected routes
+export const getServerSession = async (headers: Headers) => {
+  const authHeader = headers.get('Authorization');
+  if (!authHeader) return null;
+  
+  // Create a new Supabase client with the auth header
+  const supabaseServer = createClient(supabaseUrl, supabaseAnonKey, {
+    global: {
+      headers: {
+        Authorization: authHeader
       }
     }
-  }
-});
-
-// Export an API for getting session data
-export const getServerSession = async (headers: Headers) => {
-  return await auth.api.getSession({ headers });
+  });
+  
+  const { data: { session }, error } = await supabaseServer.auth.getSession();
+  if (error || !session) return null;
+  
+  return session;
 };
 
 // Function to check if user is authenticated
@@ -83,5 +115,16 @@ export const isAuthenticated = async (headers: Headers) => {
 // Function to check user role
 export const hasRole = async (headers: Headers, role: string) => {
   const session = await getServerSession(headers);
-  return session?.user?.role === role;
+  if (!session?.user) return false;
+  
+  // Get complete user profile from the database to get role
+  const { data, error } = await supabaseClient
+    .from('users')
+    .select('role')
+    .eq('id', session.user.id)
+    .single();
+  
+  if (error || !data) return false;
+  
+  return data.role === role;
 }; 
