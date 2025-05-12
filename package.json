@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:client && npm run build:api",
+    "build:client": "vite build",
+    "build:api": "node scripts/prepare-functions.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "test-email": "node --loader ts-node/esm src/test-email.ts",
