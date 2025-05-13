@@ -1,7 +1,6 @@
-// This file is generated at build time
-// It allows environment variables to be available globally in the browser
+// This file is generated for testing
 window.env = {
-  CLOUDFLARE_TURNSTILE_SITE_KEY: '',
-  SUPABASE_URL: '',
-  SUPABASE_ANON_KEY: ''
+  CLOUDFLARE_TURNSTILE_SITE_KEY: "TEST_VALUE",
+  SUPABASE_URL: "TEST_VALUE",
+  SUPABASE_ANON_KEY: "TEST_VALUE"
 }; 
