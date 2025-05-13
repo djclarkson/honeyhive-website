@@ -8,9 +8,38 @@ export interface User {
   organization?: string;
 }
 
+// Add type declaration for window
+declare global {
+  interface Window {
+    VITE_SUPABASE_URL?: string;
+    VITE_SUPABASE_ANON_KEY?: string;
+    env?: {
+      CLOUDFLARE_TURNSTILE_SITE_KEY?: string;
+    };
+  }
+}
+
 // Initialize Supabase client - these URLs should be loaded from environment variables in production
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const supabaseUrl = 
+  // First try build-time env vars
+  import.meta.env.VITE_SUPABASE_URL || 
+  // Then try runtime global vars (for GitHub Pages)
+  (typeof window !== 'undefined' ? window.VITE_SUPABASE_URL : '') || 
+  '';
+
+const supabaseAnonKey = 
+  import.meta.env.VITE_SUPABASE_ANON_KEY || 
+  (typeof window !== 'undefined' ? window.VITE_SUPABASE_ANON_KEY : '') || 
+  '';
+
+// For debugging
+if (typeof window !== 'undefined') {
+  console.log("Supabase URL source:", 
+    import.meta.env.VITE_SUPABASE_URL ? "import.meta.env" : 
+    window.VITE_SUPABASE_URL ? "window.VITE_SUPABASE_URL" : "not found");
+  console.log("Supabase URL:", supabaseUrl ? "✓ (set)" : "✗ (not set)");
+  console.log("Supabase Key:", supabaseAnonKey ? "✓ (set)" : "✗ (not set)");
+}
 
 // Create Supabase client
 const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
