@@ -37,10 +37,26 @@ jobs:
           cat > dist/env-config.js << EOL
           // This file is generated at build time by GitHub Actions
           window.env = {
-            CLOUDFLARE_TURNSTILE_SITE_KEY: "${{ secrets.VITE_TURNSTILE_SITE_KEY }}",
-            SUPABASE_URL: "${{ secrets.VITE_SUPABASE_URL }}",
-            SUPABASE_ANON_KEY: "${{ secrets.VITE_SUPABASE_ANON_KEY }}"
+            CLOUDFLARE_TURNSTILE_SITE_KEY: "${{ secrets.VITE_TURNSTILE_SITE_KEY }}"
           };
+          
+          // Add environment variables to import.meta.env
+          window.importMetaEnv = {
+            VITE_SUPABASE_URL: "${{ secrets.VITE_SUPABASE_URL }}",
+            VITE_SUPABASE_ANON_KEY: "${{ secrets.VITE_SUPABASE_ANON_KEY }}"
+          };
+          
+          // Attach to import.meta.env
+          try {
+            if (typeof import.meta !== 'undefined') {
+              import.meta.env = {
+                ...import.meta.env,
+                ...window.importMetaEnv
+              };
+            }
+          } catch (e) {
+            console.warn("Could not attach to import.meta.env");
+          }
           EOL
 
       - name: Deploy to GitHub Pages
