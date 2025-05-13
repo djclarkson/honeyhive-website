@@ -3,8 +3,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  // Use the repo name as the base path for GitHub Pages
-  base: '/honeyhive-website/',
+  // Use root path for custom domain
+  base: '/',
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
