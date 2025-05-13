@@ -10,9 +10,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const content = `// This file is generated at build time
 // It allows environment variables to be available globally in the browser
 window.env = {
-  CLOUDFLARE_TURNSTILE_SITE_KEY: '${process.env.VITE_TURNSTILE_SITE_KEY || ""}',
-  SUPABASE_URL: '${process.env.VITE_SUPABASE_URL || ""}',
-  SUPABASE_ANON_KEY: '${process.env.VITE_SUPABASE_ANON_KEY || ""}'
+  CLOUDFLARE_TURNSTILE_SITE_KEY: '${process.env.VITE_TURNSTILE_SITE_KEY || process.env.CLOUDFLARE_TURNSTILE_SITE_KEY || ""}',
+  VITE_TURNSTILE_SITE_KEY: '${process.env.VITE_TURNSTILE_SITE_KEY || process.env.CLOUDFLARE_TURNSTILE_SITE_KEY || ""}',
+  VITE_SUPABASE_URL: '${process.env.VITE_SUPABASE_URL || ""}',
+  VITE_SUPABASE_ANON_KEY: '${process.env.VITE_SUPABASE_ANON_KEY || ""}'
 }; 
 `;
 
@@ -23,6 +24,6 @@ const outputPath = path.resolve(__dirname, '../dist/env-config.js');
 fs.writeFileSync(outputPath, content);
 
 console.log('env-config.js generated successfully with environment variables:');
-console.log(`- VITE_TURNSTILE_SITE_KEY: ${process.env.VITE_TURNSTILE_SITE_KEY ? '✓ (set)' : '✗ (not set)'}`);
+console.log(`- VITE_TURNSTILE_SITE_KEY: ${process.env.VITE_TURNSTILE_SITE_KEY || process.env.CLOUDFLARE_TURNSTILE_SITE_KEY ? '✓ (set)' : '✗ (not set)'}`);
 console.log(`- VITE_SUPABASE_URL: ${process.env.VITE_SUPABASE_URL ? '✓ (set)' : '✗ (not set)'}`);
 console.log(`- VITE_SUPABASE_ANON_KEY: ${process.env.VITE_SUPABASE_ANON_KEY ? '✓ (set)' : '✗ (not set)'}`); 

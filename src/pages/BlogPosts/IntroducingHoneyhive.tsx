@@ -5,7 +5,7 @@ import Footer from '../../components/Footer';
 import { Calendar, ChevronLeft, MessageSquare, Users, Target } from 'lucide-react';
 import withScrollReset from '../../components/withScrollReset';
 
-const IntroducingHoneyHive: React.FC = () => {
+const IntroducingHoneyhive: React.FC = () => {
   return (
     <div className="min-h-screen bg-white font-sans">
       <Header 
@@ -30,23 +30,23 @@ const IntroducingHoneyHive: React.FC = () => {
                 <span>October 13, 2014</span>
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Introducing HoneyHive: Team Communication Automation for the Modern Workplace
+                Introducing Honeyhive: Team Communication Automation for the Modern Workplace
               </h1>
             </div>
             
             <div className="prose prose-lg max-w-none">
               <p>
-                Today we're excited to announce the launch of HoneyHive, our innovative communication automation platform designed to streamline team collaboration and enhance productivity in today's distributed work environment.
+                Today we're excited to announce the launch of Honeyhive, our innovative communication automation platform designed to streamline team collaboration and enhance productivity in today's distributed work environment.
               </p>
               
               <p>
                 As workplaces evolve and remote work becomes increasingly common, teams face growing challenges in maintaining effective communication. Traditional tools leave gaps that lead to information silos, missed action items, and disconnected workflows.
               </p>
               
-              <h2>What is HoneyHive?</h2>
+              <h2>What is Honeyhive?</h2>
               
               <p>
-                HoneyHive is a comprehensive communication automation platform that integrates traditional online messaging with structured team management, task tracking, and goal setting. Our platform creates a unified workspace where teams can:
+                Honeyhive is a comprehensive communication automation platform that integrates traditional online messaging with structured team management, task tracking, and goal setting. Our platform creates a unified workspace where teams can:
               </p>
               
               <ul>
@@ -93,18 +93,18 @@ const IntroducingHoneyHive: React.FC = () => {
               </div>
               
               <p>
-                Early users of HoneyHive have reported saving an average of 5 hours per week on communication and coordination tasks, allowing their teams to focus on what matters most.
+                Early users of Honeyhive have reported saving an average of 5 hours per week on communication and coordination tasks, allowing their teams to focus on what matters most.
               </p>
               
               <blockquote>
-                "HoneyHive has transformed how our teams collaborate. The integration of messaging with tasks and goals means nothing falls through the cracks, and everyone stays aligned on priorities."
+                "Honeyhive has transformed how our teams collaborate. The integration of messaging with tasks and goals means nothing falls through the cracks, and everyone stays aligned on priorities."
                 <cite>— Sarah Johnson, CTO at TechForward</cite>
               </blockquote>
               
               <h2>What's Next</h2>
               
               <p>
-                This is just the beginning for HoneyHive. Our roadmap includes expanding our integration capabilities with popular tools, enhancing our automation features, and introducing specialized workflows for different team functions.
+                This is just the beginning for Honeyhive. Our roadmap includes expanding our integration capabilities with popular tools, enhancing our automation features, and introducing specialized workflows for different team functions.
               </p>
               
               <p>
@@ -112,7 +112,7 @@ const IntroducingHoneyHive: React.FC = () => {
               </p>
               
               <p>
-                Ready to transform your team's communication? <Link to="/contact" className="text-primary-600 hover:text-primary-700">Contact us</Link> to schedule a demo or learn more about HoneyHive.
+                Ready to transform your team's communication? <Link to="/contact" className="text-primary-600 hover:text-primary-700">Contact us</Link> to schedule a demo or learn more about Honeyhive.
               </p>
             </div>
           </article>
@@ -124,4 +124,4 @@ const IntroducingHoneyHive: React.FC = () => {
   );
 };
 
-export default withScrollReset(IntroducingHoneyHive); 
+export default withScrollReset(IntroducingHoneyhive); 

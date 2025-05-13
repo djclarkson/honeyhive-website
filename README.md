@@ -1,4 +1,4 @@
-# HoneyHive
+# Honeyhive
 
 A modern security platform with Supabase integration.
 

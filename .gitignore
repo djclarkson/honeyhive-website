@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
-.cursor
+.cursor/
 
 # GitHub Pages
 .gh-pages-cache

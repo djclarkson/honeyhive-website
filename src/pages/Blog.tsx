@@ -16,16 +16,16 @@ interface BlogPost {
 const blogPosts: BlogPost[] = [
   {
     id: '2',
-    title: "HoneyHive Expands with Cybersecurity Workflow Automation Features",
+    title: "Honeyhive Expands with Cybersecurity Workflow Automation Features",
     date: "September 19, 2024",
-    excerpt: "We're thrilled to announce a major update to HoneyHive, introducing powerful cybersecurity workflow automation capabilities to help security teams respond faster to threats...",
+    excerpt: "We're thrilled to announce a major update to Honeyhive, introducing powerful cybersecurity workflow automation capabilities to help security teams respond faster to threats...",
     slug: 'cybersecurity-workflow-automation'
   },
   {
     id: '1',
-    title: "Introducing HoneyHive: Team Communication Automation for the Modern Workplace",
+    title: "Introducing Honeyhive: Team Communication Automation for the Modern Workplace",
     date: "October 13, 2014",
-    excerpt: "Today we're excited to announce the launch of HoneyHive, our innovative communication automation platform designed to streamline team collaboration...",
+    excerpt: "Today we're excited to announce the launch of Honeyhive, our innovative communication automation platform designed to streamline team collaboration...",
     slug: 'introducing-honeyhive'
   }
 ];
@@ -46,7 +46,7 @@ const Blog: React.FC = () => {
       <main className="pt-32 pb-16 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">HoneyHive Blog</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Honeyhive Blog</h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Latest updates, insights and news about cybersecurity workflow automation
             </p>

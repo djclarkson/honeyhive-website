@@ -20,7 +20,7 @@ import Community from './pages/Community.tsx';
 import API from './pages/API.tsx';
 import ResetPassword from './pages/ResetPassword.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
-import IntroducingHoneyHive from './pages/BlogPosts/IntroducingHoneyHive.tsx';
+import IntroducingHoneyhive from './pages/BlogPosts/IntroducingHoneyhive.tsx';
 import CybersecurityWorkflowAutomation from './pages/BlogPosts/CybersecurityWorkflowAutomation.tsx';
 import ScrollToTop from './components/ScrollToTop.tsx';
 import './index.css';
@@ -45,7 +45,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/about" element={<About />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/introducing-honeyhive" element={<IntroducingHoneyHive />} />
+          <Route path="/blog/introducing-honeyhive" element={<IntroducingHoneyhive />} />
           <Route path="/blog/cybersecurity-workflow-automation" element={<CybersecurityWorkflowAutomation />} />
           <Route path="/community" element={<ProtectedRoute><Community /></ProtectedRoute>} />
           <Route path="/api" element={<ProtectedRoute><API /></ProtectedRoute>} />

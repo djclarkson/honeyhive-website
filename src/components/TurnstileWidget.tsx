@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Turnstile } from '@marsidev/react-turnstile';
 
-// Add TypeScript interface for window.env
-declare global {
-  interface Window {
-    env?: {
-      CLOUDFLARE_TURNSTILE_SITE_KEY?: string;
-    };
-  }
-}
-
 interface TurnstileWidgetProps {
   onVerify: (token: string) => void;
   className?: string;
@@ -20,15 +11,23 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({ onVerify, className =
   const [siteKey, setSiteKey] = useState<string | null>(null);
 
   useEffect(() => {
-    // Try to get site key from different sources
+    // Try to get site key from different sources (in order of preference)
     let key = 
-      // 1. Try window.env (our custom injection)
-      (window.env?.CLOUDFLARE_TURNSTILE_SITE_KEY) || 
-      // 2. Try import.meta.env
-      import.meta.env.CLOUDFLARE_TURNSTILE_SITE_KEY;
+      // 1. Try import.meta.env (standard Vite way)
+      import.meta.env.VITE_TURNSTILE_SITE_KEY || 
+      // 2. Try window.import.meta.env (our custom injection)
+      window.import?.meta?.env?.VITE_TURNSTILE_SITE_KEY ||
+      // 3. Try older env vars
+      import.meta.env.CLOUDFLARE_TURNSTILE_SITE_KEY ||
+      window.import?.meta?.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ||
+      // 4. Try window.env (our custom global injection)
+      window.env?.VITE_TURNSTILE_SITE_KEY || 
+      window.env?.CLOUDFLARE_TURNSTILE_SITE_KEY;
     
-    console.log("Available env vars:", import.meta.env);
-    console.log("Window env:", window.env);
+    console.log("Turnstile site key sources:");
+    console.log(" - import.meta.env:", import.meta.env);
+    console.log(" - window.import?.meta?.env:", window.import?.meta?.env);
+    console.log(" - window.env:", window.env);
     console.log("Site key found:", key);
     
     setSiteKey(key || null);
