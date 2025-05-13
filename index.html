@@ -12,11 +12,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Load environment variables before any other scripts -->
+    <script src="/init-env.js"></script>
   </head>
   <body>
     <div id="root"></div>
-    <!-- Environment variables are injected at build time -->
-    <script type="module" src="/env-config.js"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
