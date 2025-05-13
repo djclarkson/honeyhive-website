@@ -3,8 +3,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  // No base path for production site at www.honeyhive.com
-  base: '/',
+  // Use the repo name as the base path for GitHub Pages
+  base: '/honeyhive-website/',
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
@@ -18,7 +18,7 @@ export default defineConfig({
     },
   },
   build: {
-    // Make paths relative
+    // Make paths relative for GitHub Pages
     assetsDir: 'assets',
     rollupOptions: {
       output: {
