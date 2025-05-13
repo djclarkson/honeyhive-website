@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found - HoneyHive</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem;
+      text-align: center;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #E67E22;
+    }
+    p {
+      margin-bottom: 1.5rem;
+    }
+    a {
+      color: #E67E22;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .logo {
+      max-width: 150px;
+      margin-bottom: 2rem;
+    }
+  </style>
+  <script>
+    // Single Page Apps for GitHub Pages
+    // Redirect to the home page if the current URL doesn't match any static assets
+    // This ensures React Router works correctly with GitHub Pages
+    const segment = 1;
+    const repo = "new.honeyhive.com"; // Adjust this to match your repo name
+    
+    // Only run this script on GitHub Pages
+    if (window.location.hostname.includes('github.io')) {
+      const l = window.location;
+      const repoPath = l.pathname.split('/').slice(0, 1 + segment).join('/');
+      
+      if (l.pathname.includes('/' + repo + '/') && 
+          !l.pathname.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|json)$/i)) {
+        // Redirect to the repo path + /#/ + the rest of the URL
+        window.location.href = 
+          repoPath + '/#/' + l.pathname.slice(repoPath.length).replace(/^\//, '');
+      }
+    }
+  </script>
+</head>
+<body>
+  <img src="/assets/logo.svg" alt="HoneyHive Logo" class="logo">
+  <h1>Page Not Found</h1>
+  <p>We couldn't find the page you were looking for. It might have been moved, deleted, or never existed in the first place.</p>
+  <p><a href="/">Return to Home</a></p>
+</body>
+</html> 
