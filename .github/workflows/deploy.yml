@@ -31,6 +31,18 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           VITE_TURNSTILE_SITE_KEY: ${{ secrets.VITE_TURNSTILE_SITE_KEY }}
 
+      # Create a custom env-config.js with environment variables from secrets
+      - name: Create env-config.js
+        run: |
+          cat > dist/env-config.js << EOL
+          // This file is generated at build time by GitHub Actions
+          window.env = {
+            CLOUDFLARE_TURNSTILE_SITE_KEY: "${{ secrets.VITE_TURNSTILE_SITE_KEY }}",
+            SUPABASE_URL: "${{ secrets.VITE_SUPABASE_URL }}",
+            SUPABASE_ANON_KEY: "${{ secrets.VITE_SUPABASE_ANON_KEY }}"
+          };
+          EOL
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
